@@ -1,7 +1,7 @@
 from fastapi import HTTPException
+from jose import jwt, JWTError
 
 from ..config import settings
-from jose import jwt, JWTError
 
 ALGORITHM = settings.ALGORITHM
 SECRET_KEY = settings.SECRET_KEY
