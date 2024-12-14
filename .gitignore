@@ -34,7 +34,8 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 .venv/
-# Unit test / coverage reports
+.idea/
+.idea
 htmlcov/
 .tox/
 .nox/
