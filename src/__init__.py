@@ -3,8 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 from .auth.main import auth
+from .order.main import order
+from .user.main import user
+
 from .utils import lifespan, RequestLoggerMiddleware
-from .user.main import current_user
 
 
 def create_app():
@@ -18,7 +20,8 @@ def create_app():
         allow_headers=["*"],
     )
     app.include_router(auth, tags=['auth'], prefix='/auth')
-    app.include_router(current_user, tags=['user'], prefix='/user')
+    app.include_router(order, tags=['order'], prefix='/order')
+    app.include_router(user, tags=['user'], prefix='/user')
 
 
 
