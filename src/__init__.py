@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-
 from .auth.main import auth
-from .order.main import order
 from .user.main import user
 
-from .utils import lifespan, RequestLoggerMiddleware
-
+from .utils.lif import lifespan
+from .utils.log import RequestLoggerMiddleware
 
 def create_app():
     app = FastAPI(lifespan=lifespan)
@@ -19,11 +17,14 @@ def create_app():
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    @app.middleware("http")
+    async def add_utf8_header(request, call_next):
+        response = await call_next(request)
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        return response
+
     app.include_router(auth, tags=['auth'], prefix='/auth')
-    app.include_router(order, tags=['order'], prefix='/order')
     app.include_router(user, tags=['user'], prefix='/user')
 
-
-
     return app
-
