@@ -21,7 +21,8 @@ def create_app():
     @app.middleware("http")
     async def add_utf8_header(request, call_next):
         response = await call_next(request)
-        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        if "application/json" in response.headers.get("Content-Type", ""):
+            response.headers["Content-Type"] = "application/json; charset=utf-8"
         return response
 
     app.include_router(auth, tags=['auth'], prefix='/auth')
